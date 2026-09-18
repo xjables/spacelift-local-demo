@@ -1,0 +1,5 @@
+This repository is for demonstrating 
+
+Let's say you have DevOps teams working with OpenTofu and Spacelift. Spacelift has a concept of the (local preview)[https://docs.spacelift.io/concepts/stack/stack-settings#enable-local-preview] in which your local content is zip and pushed to Spacelift to be run in the workers. However, this can be time consuming -- each run provides a Docker-in-Docker fresh runtime environment and providers/modules have to be installed from scratch each time  -- and for large teams, it can cause a lot of churn on the workers that could better be spent testing locally. Given that [Spacelift pricing](https://spacelift.io/pricing) has a  worker count limitations based on the tiers, it is concievable that you might was to offload some of the planning locally in the case of rapid iteration where you don't want to clock up your limited worker capacity.
+
+The configurations herein provider the scaffolding for an alternative way of setting things up so that engineers can plan locally. They will benefit from providers/module local caching to speed up iteration and avoid bogging workers down.
