@@ -1,4 +1,4 @@
-variable "github_repository" {
+variable "git_org" {
   type        = string
-  description = "The url of the GitHub repository that contains the Administrator stack code."
+  description = "The git organization for your provider. If using GitHub, this is your username or organization's name."
 }

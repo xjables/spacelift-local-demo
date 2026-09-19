@@ -34,7 +34,7 @@ resource "spacelift_stack" "s3_state" {
   slug                             = "s3-state"
   space_id                         = data.spacelift_space.root.id
   allow_run_promotion              = false
-  repository                       = var.github_repository
+  repository                       = "spacelift-local-demo"
   project_root                     = "setup/s3-state"
   branch                           = "main"
   manage_state                     = false # We'll manage this in S3
@@ -43,6 +43,11 @@ resource "spacelift_stack" "s3_state" {
   terraform_workflow_tool          = "OPEN_TOFU"
   enable_local_preview             = true
   terraform_version                = "~>1.12"
+
+  raw_git {
+    url       = "https://github.com"
+    namespace = var.github_org
+  }
 }
 
 # resource "spacelift_stack" "spacelift_state" {
