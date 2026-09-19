@@ -1,8 +1,8 @@
-
-
-# Credentials populated from env variables of the API Key we created. In a real setup, these
-# crendentials are automatically injected in via the Spacelift runtime. 
 provider "spacelift" {}
+
+data "spacelift_space" "root" {
+  space_id = "root"
+}
 
 # The github repository that is referenced should be the one where this code lives. By running the
 # stack in Spacelift, this code with import and configure the stack from which it runs. Chicken?
@@ -10,7 +10,7 @@ provider "spacelift" {}
 resource "spacelift_stack" "admin" {
   name                             = "Spacelift"
   slug                             = "spacelift"
-  space_id                         = "root"
+  space_id                         = data.spacelift_space.root.id
   allow_run_promotion              = false
   repository                       = var.github_repository
   project_root                     = "setup/admin"
@@ -32,10 +32,10 @@ import {
 resource "spacelift_stack" "s3_state" {
   name                             = "s3-state"
   slug                             = "s3-state"
-  space_id                         = "root"
+  space_id                         = data.spacelift_space.root.id
   allow_run_promotion              = false
   repository                       = var.github_repository
-  project_root                     = "demo"
+  project_root                     = "setup/s3-state"
   branch                           = "main"
   manage_state                     = false # We'll manage this in S3
   terraform_smart_sanitization     = true
@@ -45,18 +45,18 @@ resource "spacelift_stack" "s3_state" {
   terraform_version                = "~>1.12"
 }
 
-resource "spacelift_stack" "spacelift_state" {
-  name                             = "spacelift-state"
-  slug                             = "spacelift-state"
-  space_id                         = "root"
-  allow_run_promotion              = false
-  repository                       = var.github_repository
-  project_root                     = "demo"
-  branch                           = "main"
-  manage_state                     = true # We'll manage this in Spacelift
-  terraform_smart_sanitization     = true
-  enable_well_known_secret_masking = true
-  terraform_workflow_tool          = "OPEN_TOFU"
-  enable_local_preview             = true
-  terraform_version                = "~>1.12"
-}
+# resource "spacelift_stack" "spacelift_state" {
+#   name                             = "spacelift-state"
+#   slug                             = "spacelift-state"
+#   space_id                         = data.spacelift_space.root.id
+#   allow_run_promotion              = false
+#   repository                       = var.github_repository
+#   project_root                     = "setup/spacelift-state"
+#   branch                           = "main"
+#   manage_state                     = true # We'll manage this in Spacelift
+#   terraform_smart_sanitization     = true
+#   enable_well_known_secret_masking = true
+#   terraform_workflow_tool          = "OPEN_TOFU"
+#   enable_local_preview             = true
+#   terraform_version                = "~>1.12"
+# }
