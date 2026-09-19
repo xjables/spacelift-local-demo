@@ -12,7 +12,7 @@ resource "spacelift_stack" "admin" {
   slug                             = "spacelift"
   space_id                         = data.spacelift_space.root.id
   allow_run_promotion              = false
-  repository                       = var.github_repository
+  repository                       = "spacelift-local-demo"
   project_root                     = "setup/admin"
   branch                           = "main"
   manage_state                     = true
@@ -21,6 +21,11 @@ resource "spacelift_stack" "admin" {
   terraform_workflow_tool          = "OPEN_TOFU"
   enable_local_preview             = true
   terraform_version                = "~>1.12"
+
+  raw_git {
+    url       = "https://github.com"
+    namespace = var.git_org
+  }
 }
 
 import {
@@ -46,7 +51,7 @@ resource "spacelift_stack" "s3_state" {
 
   raw_git {
     url       = "https://github.com"
-    namespace = var.github_org
+    namespace = var.git_org
   }
 }
 
@@ -55,7 +60,7 @@ resource "spacelift_stack" "s3_state" {
 #   slug                             = "spacelift-state"
 #   space_id                         = data.spacelift_space.root.id
 #   allow_run_promotion              = false
-#   repository                       = var.github_repository
+#   repository = "spacelift-local-demo"
 #   project_root                     = "setup/spacelift-state"
 #   branch                           = "main"
 #   manage_state                     = true # We'll manage this in Spacelift
@@ -64,4 +69,9 @@ resource "spacelift_stack" "s3_state" {
 #   terraform_workflow_tool          = "OPEN_TOFU"
 #   enable_local_preview             = true
 #   terraform_version                = "~>1.12"
+
+#     raw_git {
+#         url       = "https://github.com"
+#         namespace = var.git_org
+#     }
 # }
