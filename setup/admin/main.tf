@@ -23,8 +23,8 @@ resource "spacelift_stack" "admin" {
   terraform_version                = "~>1.12"
 
   raw_git {
-    url       = "https://github.com"
-    namespace = var.git_org
+    url       = var.git_url
+    namespace = "spacelift"
   }
 }
 
@@ -50,8 +50,8 @@ resource "spacelift_stack" "s3_state" {
   terraform_version                = "~>1.12"
 
   raw_git {
-    url       = "https://github.com"
-    namespace = var.git_org
+    url       = var.git_url
+    namespace = "s3-state"
   }
 }
 

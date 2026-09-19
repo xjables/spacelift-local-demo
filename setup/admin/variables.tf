@@ -1,4 +1,4 @@
-variable "git_org" {
+variable "git_url" {
   type        = string
-  description = "The git organization for your provider. If using GitHub, this is your username or organization's name."
+  description = "The git urls to your cloned version of this repo."
 }
